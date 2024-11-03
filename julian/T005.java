@@ -28,6 +28,32 @@ public class T005 {
 
         return right - left - 1;
     }
+
+    public String longestPalindromeDP(String s) {
+        // 动态规划
+        if (s == null || s.length() < 2) {return s;}
+
+        int n = s.length();
+        int maxLen = 1;
+        int begin = 0;
+        int end = 0;
+        boolean[][] dp = new boolean[n][n]; //dp[i][j]表示i到j的子串是否为回文串
+
+        for (int r = 1; r < n; r++) {
+            for (int l = 0; l < r; l++) {
+                if (s.charAt(l) == s.charAt(r) && (r - l <= 2 || dp[l + 1][r - 1])) {
+                    dp[l][r] = true;
+                    if (r - l + 1 > maxLen) {
+                        maxLen = r - l + 1;
+                        begin = l;
+                        end = r;
+                    }
+                }
+            }
+        }
+
+        return s.substring(begin, end + 1);
+    }
     public static void main(String[] args) {
 
     }
