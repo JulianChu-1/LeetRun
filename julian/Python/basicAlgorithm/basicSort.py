@@ -53,9 +53,19 @@ class MySort():
     
     def merge(self, left_nums, right_nums):
         nums = []
-        left, right = 0, 0
+        
+        while left_nums and right_nums:
+            if left_nums[0] < right_nums[0]:
+                nums.append(left_nums.pop(0))
+            else:
+                nums.append(right_nums.pop(0))
+        
+        while left_nums:
+            nums.append(left_nums.pop(0))
+        while right_nums:
+            nums.append(right_nums.pop(0))
 
-        return 0
+        return nums
     
     def mergeSort(self, arr):
         if len(arr) < 2:
@@ -64,7 +74,7 @@ class MySort():
         mid = len(arr) // 2
         left_nums = self.mergeSort(arr[:mid])
         right_nums = self.mergeSort(arr[mid:])
-        print(left_nums)
+        # print(left_nums)
         return self.merge(left_nums, right_nums)
         
     
