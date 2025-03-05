@@ -121,6 +121,29 @@ class Tree:
         
         return res
 
+    def buildFromPreIn(self, preorder, inorder):
+        def createtree(preorder, inorder, n):
+            if n == 0: return None
+            k = 0
+            while preorder[0] != inorder[k]:
+                k += 1
+            node = TreeNode(inorder[k])
+            node.left = createtree(preorder[1 : k + 1], inorder[0 : k], k)
+            node.right = createtree(preorder[k + 1:], inorder[k:], n - k - 1)
+            return node
+        createtree(preorder, inorder, len(inorder))
+    
+    def buildFromInPost(self, inorder, postorder):
+        def createtree(inorder, postorder, n):
+            if n == 0: return None
+            k = 0
+            while postorder[-1] != inorder[k]:
+                k += 1
+            node = TreeNode(inorder[k])
+            node.left = createtree(inorder[:k], postorder[:k], k)
+            node.right = createtree(inorder[k + 1 :], postorder[k : n - 1], n - k - 1)
+            return node
+        createtree(inorder, postorder, len(inorder))
 
 tree = Tree()
 values = [5, 3, 7, 2, 4, 6, 8]
